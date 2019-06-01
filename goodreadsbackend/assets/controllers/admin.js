@@ -4,7 +4,9 @@ bodyParser = require('body-parser'),
 {Category} = require('../models/category'),
 {Author} = require('../models/author'),
 {Book} = require('../models/books'),
-app = express();
+app = express(),
+cors = require('cors');
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -13,16 +15,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //categories section
 
 //categories page
-app.get('/admin/categories' , (req , res)=>{
-    Category.find().then( (categories)=>{
-        res.send({categories})
+app.get('/admin/category' , (req , res)=>{
+    Category.find().then( (category)=>{
+        res.send({category})
     }, (e)=>{
         res.status(400).send(e);
     })
 })
 
 //add category
-app.post('/admin/categories' , (req , res)=>{
+app.post('/admin/category' , (req , res)=>{
     let newCat = new Category({
         name : req.body.name
     })
@@ -34,7 +36,7 @@ app.post('/admin/categories' , (req , res)=>{
 })
 
 //authors page
-app.get('/admin/authors' , (req , res)=>{
+app.get('/admin/author' , (req , res)=>{
     Author.find().then( (author)=>{
         res.send({author})
     }, (e)=>{
@@ -43,7 +45,7 @@ app.get('/admin/authors' , (req , res)=>{
 })
 
 //books page
-app.get('/admin/books' , (req , res)=>{
+app.get('/admin/book' , (req , res)=>{
     Book.find().then( (book)=>{
         res.send({book})
     }, (e)=>{
@@ -52,6 +54,6 @@ app.get('/admin/books' , (req , res)=>{
 })
 
 
-app.listen(3000 , ()=>{
+app.listen(4000 , ()=>{
     console.log('server started on port 3000!')
 })
